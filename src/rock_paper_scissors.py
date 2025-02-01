@@ -1,13 +1,5 @@
+from src import common
 import random
-
-
-def read_choice(choices: list[str]) -> str:
-    choice = None
-
-    while choice not in choices:
-        choice = input("Pick one of {choices}: ".format(choices=", ".join(choices)))
-
-    return choice
 
 
 def determine_winner(user_choice, comp_choice):
@@ -34,7 +26,7 @@ def run_game():
 
     options = ["rock", "paper", "scissors"]
 
-    user_choice = read_choice(options)
+    user_choice = common.read_choice(options)
     comp_choice = random.choice(options)
 
     print(f"you chose {user_choice}, computer chose {comp_choice}")

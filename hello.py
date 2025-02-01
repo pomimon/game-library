@@ -1,3 +1,4 @@
+from src import common
 from src import guess_the_number
 from src import rock_paper_scissors
 
@@ -34,18 +35,9 @@ def build_user_prompt(games: list[Game]) -> str:
     return "\n".join(lines)
 
 
-def read_integer(prompt: str) -> int | None:
-    string = input(prompt)
-
-    try:
-        return int(string)
-    except:
-        return None
-
-
 def get_selected_game(prompt: str, games: list[Game]) -> Game:
     while True:
-        game_int = read_integer(prompt)
+        game_int = common.read_integer(prompt)
 
         if game_int == None:
             print("Game selection is not valid (not a number)")
