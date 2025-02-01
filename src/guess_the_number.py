@@ -1,9 +1,10 @@
+from src import common
 import random
 
-def cow():
-    return """
+def cow(phrase: str) -> str:
+    return f"""
  __________________
-< you won the game! >
+< {phrase} >
  ------------------
 \\   ^__^
  \\  (oo)\\_______
@@ -11,69 +12,57 @@ def cow():
         ||----w |
         ||     ||
 """
-
-def cow2():
-    return """
- __________________
-< you lost, try again >
- ------------------
-\\   ^__^
- \\  (oo)\\_______
-    (__)\\       )\\/\\
-        ||----w |
-        ||     ||
-"""
-
-def read_integer(prompt):
-    # TODO: Handle parse error
-    return int(input(prompt))
-
 
 def run_game():
     print("Let's play a guessing game")
 
-    # ask user for range start
-    x_int = read_integer("Enter the start of the range: ")
+    difficulties_data: dict[str, dict[str, int | list[int]]] = {
+      "easy": {
+        "attempts": 10,
+        "range": [1, 20],
+      },
+      "normal": {
+        "attempts": 7,
+        "range": [1, 50],
+      },
+      "hard": {
+        "attempts": 5,
+        "range": [1, 100],
+      },
+    }
 
-    # ask user for range end
-    y_int = read_integer("Enter the end of the range: ")
+    difficulties = list(difficulties_data.keys())
 
-    # check if range is valid (lower < upper)
-    if y_int < x_int:
-        print("I will pick the range")
-        # reverse numbers to be in proper range
-        x_int, y_int = y_int, x_int
-        print("The new range is {start} - {end}".format(start=x_int, end=y_int))
-    elif x_int == y_int:
-        print("I will pick the range")
-        y_int += 20
-        print("The new range is {start} - {end}".format(start=x_int, end=y_int))
-    else:
-        print("Your range is {start} - {end}".format(start=x_int, end=y_int))
+    chosen_difficulty = common.read_choice(difficulties)
 
-    # pick random number in range
-    my_number = random.randint(x_int, y_int)
+    difficulty_data = difficulties_data[chosen_difficulty]
 
-    active = True
+    range_start, range_end = difficulty_data["range"]
+
+    random_number = random.randint(range_start, range_end)
+    max_attempts = difficulty_data['attempts']
+
+    print(f"Pick a number between {range_start} and {range_end} in {max_attempts} attempts")
+
     attempt = 0
-    max_attempts = 4
 
-    while active:
-        # ask user for guess
-        user_int = read_integer("Enter your guess: ")
+    while True:
+        user_int = common.read_integer("Enter your guess: ")
 
-        if user_int < my_number:
+        if user_int is None:
+            print("Your guess is not valid")
+        elif user_int < random_number:
             print("Your guess is too low")
-        elif user_int > my_number:
+        elif user_int > random_number:
             print("Your guess is too high")
         else:
-            print(cow())
-            active = False
+            print(cow("you won the game!"))
+            break
 
         attempt += 1
 
         if attempt == max_attempts:
-            print(cow2())
-            active = False
+            print(cow(f"The number was {random_number} >\n< you lost, try again"))
+            break
         else:
             print("You have {remaining} attempts".format(remaining=max_attempts-attempt))
