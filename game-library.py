@@ -1,6 +1,7 @@
 from src import common
 from src import guess_the_number
 from src import rock_paper_scissors
+from src import dice_roll
 
 
 class Game:
@@ -19,6 +20,7 @@ def get_game_info() -> list[Game]:
     return [
         Game("Rock, Paper, Scissors", rock_paper_scissors.run_game),
         Game("Guess the Number", guess_the_number.run_game),
+        Game("Roll the Dice", dice_roll.run_game),
     ]
 
 
