@@ -7,6 +7,23 @@
 import random
 from src import common
 
+DICE_1 = (
+  "┌─────────┐\n"
+  "│         │\n"
+  "│    ●    │\n"
+  "│         │\n"
+  "└─────────┘"
+)
+
+DICE_ART = {
+  1: DICE_1,
+  2: Dice_2,
+  3: Dice_3,
+  4: Dice_4,
+  5: Dice_5,
+  6: Dice_6,
+}
+
 def run_game():
 
   # take one - gives a set amount of dice
@@ -27,5 +44,6 @@ def run_game():
 
   print(f"Dice Rolls > {rolls}")
 
-
+  for dice in rolls:
+    print(DICE_ART[dice])
 
