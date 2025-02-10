@@ -2,6 +2,7 @@ from src import common
 from src import guess_the_number
 from src import rock_paper_scissors
 from src import dice_roll
+from src import whos_that_pokemon
 
 
 class Game:
@@ -21,9 +22,10 @@ def get_game_info() -> list[Game]:
         Game("Rock, Paper, Scissors", rock_paper_scissors.run_game),
         Game("Guess the Number", guess_the_number.run_game),
         Game("Roll the Dice", dice_roll.run_game),
+        Game("Who's that Pokemon", whos_that_pokemon.run_game),
     ]
 
-
+#TODO rewrite as selectable prompt
 def build_user_prompt(games: list[Game]) -> str:
     lines = []
     lines.append(f"There are {len(games)} games in the library:\n")
