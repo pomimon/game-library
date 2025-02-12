@@ -56,7 +56,7 @@ DICE_6 = (
 )
 
 
-DICE_ART = {
+DICE_ART: dict[int, str] = {
   1: DICE_1,
   2: DICE_2,
   3: DICE_3,
@@ -78,13 +78,15 @@ def run_game():
   # take two - asks for input on how many dice is needed
   dice  = range(1, 7)
   count = common.read_integer("Enter the number of dice you need: ")
-  rolls = []
+  rolls: list[int] = []
 
-  for i in range(count):
+  if count is None:
+    return
+
+  for i in range(0, count):
     rolls.append(random.choice(dice))
 
   print(f"Dice Rolls > {rolls}")
 
-  for dice in rolls:
-    print(DICE_ART[dice])
-
+  for index in range(0, len(rolls)):
+    print(DICE_ART[rolls[index]])
